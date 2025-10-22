@@ -232,6 +232,32 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
             ppo_whiten_rewards=ppo_whiten_rewards,
         )
     )
+    with gr.Accordion(open=False) as ffn_tab:
+        with gr.Row():
+            ffn_target_layer = gr.Slider(
+                minimum=0, 
+                maximum=128, 
+                value=16, 
+                step=1,
+                label="FFN Target Layer"
+            )
+            ffn_modules = gr.Textbox(
+                value="gate_proj,down_proj,up_proj",
+                label="FFN Modules"
+            )
+            ffn_extra_config = gr.Textbox(
+                label="Extra Config"
+            )
+
+    input_elems.update({ffn_target_layer, ffn_modules, ffn_extra_config})
+    elem_dict.update(
+        dict(
+            ffn_tab=ffn_tab,
+            ffn_target_layer=ffn_target_layer, 
+            ffn_modules=ffn_modules,
+            ffn_extra_config=ffn_extra_config
+        )
+    )
 
     with gr.Accordion(open=False) as mm_tab:
         with gr.Row():
@@ -443,5 +469,8 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
         concurrency_limit=None,
     )
     config_path.change(list_config_paths, [current_time], [config_path], queue=False)
+
+
+
 
     return elem_dict

@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#     http://www.apache.o,g/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -441,6 +441,16 @@ class SwanLabArguments:
 
 
 @dataclass
+class FFNArguments:
+    """FFN 微调相关参数"""
+    ffn_target_layer: Optional[int] = field(
+        default=None,
+        metadata={
+            "help": "目标层号，用于 FFN-only 微调 (从0开始计数)"
+        }
+    )
+
+@dataclass
 class FinetuningArguments(
     SwanLabArguments,
     BAdamArgument,
@@ -450,6 +460,7 @@ class FinetuningArguments(
     LoraArguments,
     OFTArguments,
     FreezeArguments,
+    FFNArguments,  # 添加新的参数类
 ):
     r"""Arguments pertaining to which techniques we are going to fine-tuning with."""
 
@@ -461,7 +472,7 @@ class FinetuningArguments(
         default="sft",
         metadata={"help": "Which stage will be performed in training."},
     )
-    finetuning_type: Literal["lora", "freeze", "full"] = field(
+    finetuning_type: Literal[ "freeze", "lora", "full", "ffn_only"] = field(  # 添加 ffn_only 选项
         default="lora",
         metadata={"help": "Which fine-tuning method to use."},
     )
@@ -513,6 +524,12 @@ class FinetuningArguments(
         default=False,
         metadata={"help": "Whether or not to compute effective tokens per second."},
     )
+    ffn_target_layer: Optional[int] = field(
+        default=None,
+        metadata={
+            "help": "Target layer number for FFN-only tuning (0-based indexing)"
+        }
+    )
 
     def __post_init__(self):
         def split_arg(arg):
@@ -530,7 +547,7 @@ class FinetuningArguments(
         self.apollo_target: list[str] = split_arg(self.apollo_target)
         self.use_ref_model = self.stage == "dpo" and self.pref_loss not in ["orpo", "simpo"]
 
-        assert self.finetuning_type in ["lora", "oft", "freeze", "full"], "Invalid fine-tuning method."
+        assert self.finetuning_type in ["lora", "oft", "freeze", "full", "ffn_only"], "Invalid fine-tuning method."
         assert self.ref_model_quantization_bit in [None, 8, 4], "We only accept 4-bit or 8-bit quantization."
         assert self.reward_model_quantization_bit in [None, 8, 4], "We only accept 4-bit or 8-bit quantization."
 
