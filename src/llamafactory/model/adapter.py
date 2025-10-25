@@ -33,7 +33,52 @@ if TYPE_CHECKING:
 
 
 logger = logging.get_logger(__name__)
+def _setup_ffn_tuning(
+    model: "PreTrainedModel",
+    finetuning_args: "FinetuningArguments", 
+    is_trainable: bool,
+    cast_trainable_params_to_fp32: bool
+) -> None:
+    """只微调指定层的 FFN 结构"""
+    if not is_trainable:
+        return
 
+    logger.info_rank0("Fine-tuning method: FFN-only")
+    
+    # 获取目标层号
+    target_layer = 16
+    # target_layer = getattr(finetuning_args, "ffn_target_layer", None)
+    # if target_layer is None:
+    #     raise ValueError("Must specify ffn_target_layer for FFN-only tuning")
+        
+    # num_layers = getattr(model.config, "num_hidden_layers", None)
+    # if target_layer >= num_layers:
+    #     target_layer = num_layers % 2 + 1
+    #     raise ValueError(f"Target layer {target_layer} exceeds model layers {num_layers}")
+    
+    # 冻结所有参数
+    for param in model.parameters():
+        param.requires_grad = False
+    
+    # 只解冻目标层的 FFN 参数
+    ffn_keywords = [
+        f"model.layers.{target_layer}.mlp.gate_proj",
+        f"model.layers.{target_layer}.mlp.down_proj", 
+        f"model.layers.{target_layer}.mlp.up_proj"
+    ]
+    
+    trainable_params = []
+    for name, param in model.named_parameters():
+        if any(keyword in name for keyword in ffn_keywords):
+            param.requires_grad = True
+            if cast_trainable_params_to_fp32:
+                param.data = param.data.to(torch.float32)
+            trainable_params.append(name)
+            
+    if len(trainable_params) == 0:
+        raise ValueError(f"No FFN parameters found in layer {target_layer}")
+        
+    logger.info_rank0(f"Trainable FFN parameters in layer {target_layer}: {trainable_params}")
 
 def _setup_full_tuning(
     model: "PreTrainedModel",
@@ -85,7 +130,10 @@ def _setup_freeze_tuning(
             )
 
         stride = num_layers // finetuning_args.freeze_trainable_layers
+        #what
         trainable_layer_ids = range(stride - 1, num_layers + stride - 1, stride)
+        #what
+        
     elif finetuning_args.freeze_trainable_layers > 0:  # fine-tuning the last n layers if num_layer_trainable > 0
         trainable_layer_ids = range(max(0, num_layers - finetuning_args.freeze_trainable_layers), num_layers)
     else:  # fine-tuning the first n layers if num_layer_trainable < 0
@@ -322,6 +370,9 @@ def init_adapter(
         model = _setup_lora_tuning(
             config, model, model_args, finetuning_args, is_trainable, cast_trainable_params_to_fp32
         )
+    elif finetuning_args.finetuning_type == "ffn_only":
+        _setup_ffn_tuning(model, finetuning_args, is_trainable, cast_trainable_params_to_fp32)
+       
     else:
         raise NotImplementedError(f"Unknown finetuning type: {finetuning_args.finetuning_type}.")
 
