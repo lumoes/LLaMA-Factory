@@ -45,8 +45,8 @@ def _setup_ffn_tuning(
 
     logger.info_rank0("Fine-tuning method: FFN-only")
     
-    # 获取目标层号
-    target_layer = 16
+    # # 获取目标层号
+    # #target_layer = 16
     # target_layer = getattr(finetuning_args, "ffn_target_layer", None)
     # if target_layer is None:
     #     raise ValueError("Must specify ffn_target_layer for FFN-only tuning")
@@ -56,16 +56,42 @@ def _setup_ffn_tuning(
     #     target_layer = num_layers % 2 + 1
     #     raise ValueError(f"Target layer {target_layer} exceeds model layers {num_layers}")
     
-    # 冻结所有参数
+    # # 冻结所有参数
+    # for param in model.parameters():
+    #     param.requires_grad = False
+    
+    # # 只解冻目标层的 FFN 参数
+    # ffn_keywords = [
+    #     f"model.layers.{target_layer}.mlp.gate_proj",
+    #     f"model.layers.{target_layer}.mlp.down_proj", 
+    #     f"model.layers.{target_layer}.mlp.up_proj"
+    # ]
+    target_layers = [4, 6, 8] 
+    
+    # 获取模型总层数
+    num_layers = getattr(model.config, "num_hidden_layers", None)
+    
+    # 2. 校验层号是否越界
+    if num_layers is not None:
+        for layer_idx in target_layers:
+            if layer_idx >= num_layers:
+                raise ValueError(f"Target layer {layer_idx} exceeds model layers {num_layers}")
+    
+    # 3. 先冻结所有参数 (这是基础)
     for param in model.parameters():
         param.requires_grad = False
     
-    # 只解冻目标层的 FFN 参数
-    ffn_keywords = [
-        f"model.layers.{target_layer}.mlp.gate_proj",
-        f"model.layers.{target_layer}.mlp.down_proj", 
-        f"model.layers.{target_layer}.mlp.up_proj"
-    ]
+    # 4. 核心修改：解冻这几层的所有参数
+    # 我们遍历所有参数名，如果名字里包含 "layers.4." 或 "layers.6." 等，就解冻
+    
+    print(f"正在解冻以下层的所有参数: {target_layers}")
+    
+    for name, param in model.named_parameters():
+        for layer_idx in target_layers:
+            # 关键匹配逻辑：匹配 "layers.{层号}." 
+            # 注意末尾的 "." 很重要，防止匹配到 layers.14 当你只想找 layers.1 时
+            if f"layers.{layer_idx}." in name:
+                param.requires_grad = True
     
     trainable_params = []
     for name, param in model.named_parameters():

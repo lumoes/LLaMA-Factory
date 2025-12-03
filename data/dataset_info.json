@@ -16,6 +16,17 @@
       "tools": "tools"
     }
   },
+    "math":{
+        "hf_hub_url":"openai/gsm8k",
+        "split":"train",
+        "columns": {
+      "prompt": "question",
+      "response": "answer"
+    },
+        "subset":"main"
+     
+        
+    },
   "glaive_toolcall_zh_demo": {
     "file_name": "glaive_toolcall_zh_demo.json",
     "formatting": "sharegpt",
@@ -198,6 +209,13 @@
       "response": "output"
     }
   },
+    "aime":{
+        "hf_hub_url": "HuggingFaceH4/aime_2024",
+         "columns": {
+      "prompt": "problem",
+      "response": "solution"
+    }
+    },
   "webnovel": {
     "hf_hub_url": "zxbsmk/webnovel_cn",
     "ms_hub_url": "AI-ModelScope/webnovel_cn"
