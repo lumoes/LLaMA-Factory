@@ -110,6 +110,9 @@
     "ms_hub_url": "llamafactory/alpaca_gpt4_zh",
     "om_hub_url": "State_Cloud/alpaca-gpt4-data-zh"
   },
+  "trivia_qa":{
+"hf_hub_url": "mandarjoshi/trivia_qa"
+  },
   "glaive_toolcall_en": {
     "hf_hub_url": "llamafactory/glaive_toolcall_en",
     "formatting": "sharegpt",

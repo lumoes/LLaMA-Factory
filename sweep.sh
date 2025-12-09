@@ -1,70 +1,74 @@
 #!/bin/bash
 
 # ================= 配置区 =================
-# 激活环境
 source /root/miniconda3/etc/profile.d/conda.sh
-conda activate v1  # 你的环境名
+conda activate v1
 
-# 基础模型路径
 MODEL_PATH="/root/autodl-tmp/models/llama3-8b"
-
-# 结果保存根目录
 BASE_OUTPUT_DIR="saves/llama3-8b/layer_scan"
+SUMMARY_FILE="${BASE_OUTPUT_DIR}/scan_results.csv"  # 结果汇总文件
 
-# 扫描的层号列表 (步长为 4，加上最后一层 31)
-# 对应: 0, 4, 8,10, 12, 16, 20, 24, 28, 31
-LAYERS_TO_SCAN=( 0 4 8 10 12 16 20 24 28 31)
+# 扫描列表
+LAYERS_TO_SCAN=( 0 4 8 10 12 16 20 24 28 31 )
 
-# 统一参数
-LR="1e-4"           # 假设这是你测出的最佳 LR
-RANK="256"          # High-Rank 模拟知识注入
-STEPS="200"         # 快速扫描，200步看 Loss 足够了
+LR="2e-4"           # 稍微加大一点，因为只有200步，要让它显形
+RANK="256"
+STEPS="300"         # 稍微加长一点
 # =========================================
 
+# 初始化汇总文件头
+mkdir -p $BASE_OUTPUT_DIR
+echo "Layer_ID,Training_Loss,Eval_Loss" > $SUMMARY_FILE
+
 echo "🚀 Starting Layer Sensitivity Scan..."
-echo "Layers to scan: ${LAYERS_TO_SCAN[@]}"
 
 for LAYER_ID in "${LAYERS_TO_SCAN[@]}"; do
     echo "----------------------------------------------------"
     echo "🧪 Processing Layer: $LAYER_ID"
     echo "----------------------------------------------------"
 
-    # [关键技术] 动态构建 lora_target 字符串
-    # LLaMA-Factory 支持后缀匹配，这里我们构造唯一的后缀来锁定该层
-    # Llama-3 结构: model.layers.16.mlp.gate_proj
     TARGET="layers.${LAYER_ID}.mlp.gate_proj,layers.${LAYER_ID}.mlp.up_proj,layers.${LAYER_ID}.mlp.down_proj"
-    
     OUTPUT_DIR="${BASE_OUTPUT_DIR}/layer_${LAYER_ID}"
 
-    # 启动训练
-    # 注意：我们关闭了 do_eval 以节省时间，直接看 training loss 或者最后跑一次 eval
-    # 如果你想看 eval loss，把 --do_eval true 加上，并设置 val_size
+    # 训练 + 评估
     CUDA_VISIBLE_DEVICES=0 llamafactory-cli train \
         --stage sft \
         --do_train \
+        --do_eval \
         --model_name_or_path $MODEL_PATH \
         --template llama3 \
         --dataset math \
+        --val_size 0.1 \
         --finetuning_type lora \
         --lora_rank $RANK \
         --lora_alpha 512 \
         --lora_target "$TARGET" \
         --output_dir $OUTPUT_DIR \
         --overwrite_output_dir \
-        --per_device_train_batch_size 8 \
+        --per_device_train_batch_size 4 \
         --gradient_accumulation_steps 4 \
         --learning_rate $LR \
         --lr_scheduler_type cosine \
-        --warmup_ratio 0.1 \
+        --warmup_ratio 0.05 \
         --max_steps $STEPS \
         --logging_steps 10 \
         --save_steps $STEPS \
         --save_total_limit 1 \
-        --gradient_checkpointing true \
+        --eval_steps $STEPS \
         --bf16 \
         --trust_remote_code true
 
-    echo "✅ Layer $LAYER_ID finished. Saved to $OUTPUT_DIR"
+    # [关键] 自动抓取结果
+    # 从 trainer_state.json 中提取最后的 loss (需要 python 或 jq，这里用简单的 grep 提取逻辑)
+    # 如果没有 jq，手动看也行，但建议用 python one-liner 提取
+    
+    # 这里是一个简单的 Python 提取脚本
+    TRAIN_LOSS=$(python3 -c "import json; print(json.load(open('${OUTPUT_DIR}/trainer_state.json'))['log_history'][-2]['loss'])" 2>/dev/null || echo "N/A")
+    EVAL_LOSS=$(python3 -c "import json; print(json.load(open('${OUTPUT_DIR}/trainer_state.json'))['log_history'][-1]['eval_loss'])" 2>/dev/null || echo "N/A")
+    
+    echo "${LAYER_ID},${TRAIN_LOSS},${EVAL_LOSS}" >> $SUMMARY_FILE
+    
+    echo "✅ Layer $LAYER_ID finished. Train Loss: $TRAIN_LOSS | Eval Loss: $EVAL_LOSS"
 done
 
-echo "🎉 All Scans Completed!"
+echo "🎉 All Scans Completed! Check results at: $SUMMARY_FILE"

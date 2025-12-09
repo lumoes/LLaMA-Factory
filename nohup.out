@@ -1,0 +1,500 @@
+/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[INFO|2025-12-04 03:03:06] llamafactory.hparams.parser:423 >> Process rank: 0, world size: 1, device: cuda:0, distributed training: False, compute dtype: torch.bfloat16
+[INFO|tokenization_utils_base.py:2093] 2025-12-04 03:03:06,212 >> loading file tokenizer.json
+[INFO|tokenization_utils_base.py:2093] 2025-12-04 03:03:06,212 >> loading file tokenizer.model
+[INFO|tokenization_utils_base.py:2093] 2025-12-04 03:03:06,212 >> loading file added_tokens.json
+[INFO|tokenization_utils_base.py:2093] 2025-12-04 03:03:06,212 >> loading file special_tokens_map.json
+[INFO|tokenization_utils_base.py:2093] 2025-12-04 03:03:06,212 >> loading file tokenizer_config.json
+[INFO|tokenization_utils_base.py:2093] 2025-12-04 03:03:06,212 >> loading file chat_template.jinja
+[INFO|tokenization_utils_base.py:2364] 2025-12-04 03:03:07,319 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[INFO|configuration_utils.py:763] 2025-12-04 03:03:07,322 >> loading configuration file /home/chenzhican/LLaMA-Factory/Llama-3-8B-Base/LLM-Research/Meta-Llama-3-8B/config.json
+[INFO|configuration_utils.py:839] 2025-12-04 03:03:07,328 >> Model config LlamaConfig {
+  "architectures": [
+    "LlamaForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 128000,
+  "dtype": "bfloat16",
+  "eos_token_id": 128001,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 4096,
+  "initializer_range": 0.02,
+  "intermediate_size": 14336,
+  "max_position_embeddings": 8192,
+  "mlp_bias": false,
+  "model_type": "llama",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 32,
+  "num_key_value_heads": 8,
+  "pretraining_tp": 1,
+  "rms_norm_eps": 1e-05,
+  "rope_scaling": null,
+  "rope_theta": 500000.0,
+  "tie_word_embeddings": false,
+  "transformers_version": "4.57.1",
+  "use_cache": true,
+  "vocab_size": 128256
+}
+
+[INFO|tokenization_utils_base.py:2093] 2025-12-04 03:03:07,331 >> loading file tokenizer.json
+[INFO|tokenization_utils_base.py:2093] 2025-12-04 03:03:07,332 >> loading file tokenizer.model
+[INFO|tokenization_utils_base.py:2093] 2025-12-04 03:03:07,332 >> loading file added_tokens.json
+[INFO|tokenization_utils_base.py:2093] 2025-12-04 03:03:07,332 >> loading file special_tokens_map.json
+[INFO|tokenization_utils_base.py:2093] 2025-12-04 03:03:07,332 >> loading file tokenizer_config.json
+[INFO|tokenization_utils_base.py:2093] 2025-12-04 03:03:07,332 >> loading file chat_template.jinja
+[INFO|tokenization_utils_base.py:2364] 2025-12-04 03:03:08,410 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[WARNING|2025-12-04 03:03:08] llamafactory.data.template:148 >> `template` was not specified, use `empty` template.
+[INFO|2025-12-04 03:03:08] llamafactory.data.template:143 >> Add pad token: <|end_of_text|>
+[INFO|2025-12-04 03:03:08] llamafactory.data.loader:143 >> Loading dataset llamafactory/alpaca_gpt4_en...
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'llamafactory/alpaca_gpt4_en' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+Converting format of dataset (num_proc=16): 100%|██████████| 10000/10000 [00:00<?, ? examples/s]Converting format of dataset (num_proc=16): 10448 examples [00:00, 510.97 examples/s]           Converting format of dataset (num_proc=16): 19027 examples [00:00, 12393.14 examples/s]Converting format of dataset (num_proc=16): 20000 examples [00:01, 8205.89 examples/s] 
+Running tokenizer on dataset (num_proc=16): 100%|██████████| 10000/10000 [00:00<?, ? examples/s]Running tokenizer on dataset (num_proc=16): 10625 examples [00:04, 151.69 examples/s]           Running tokenizer on dataset (num_proc=16): 11250 examples [00:05, 277.18 examples/s]Running tokenizer on dataset (num_proc=16): 11875 examples [00:05, 433.24 examples/s]Running tokenizer on dataset (num_proc=16): 12500 examples [00:06, 588.58 examples/s]Running tokenizer on dataset (num_proc=16): 13125 examples [00:06, 722.74 examples/s]Running tokenizer on dataset (num_proc=16): 14375 examples [00:07, 1141.01 examples/s]Running tokenizer on dataset (num_proc=16): 15000 examples [00:07, 1179.60 examples/s]Running tokenizer on dataset (num_proc=16): 15625 examples [00:07, 1213.69 examples/s]Running tokenizer on dataset (num_proc=16): 16250 examples [00:09, 910.15 examples/s] Running tokenizer on dataset (num_proc=16): 16875 examples [00:09, 1185.29 examples/s]Running tokenizer on dataset (num_proc=16): 17500 examples [00:09, 1389.59 examples/s]Running tokenizer on dataset (num_proc=16): 18125 examples [00:10, 1078.57 examples/s]Running tokenizer on dataset (num_proc=16): 18750 examples [00:10, 1218.70 examples/s]Running tokenizer on dataset (num_proc=16): 19375 examples [00:10, 1557.42 examples/s]Running tokenizer on dataset (num_proc=16): 20000 examples [00:11, 1113.12 examples/s]Running tokenizer on dataset (num_proc=16): 20000 examples [00:12, 827.94 examples/s] 
+[INFO|configuration_utils.py:763] 2025-12-04 03:03:26,872 >> loading configuration file /home/chenzhican/LLaMA-Factory/Llama-3-8B-Base/LLM-Research/Meta-Llama-3-8B/config.json
+[INFO|configuration_utils.py:839] 2025-12-04 03:03:26,874 >> Model config LlamaConfig {
+  "architectures": [
+    "LlamaForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 128000,
+  "dtype": "bfloat16",
+  "eos_token_id": 128001,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 4096,
+  "initializer_range": 0.02,
+  "intermediate_size": 14336,
+  "max_position_embeddings": 8192,
+  "mlp_bias": false,
+  "model_type": "llama",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 32,
+  "num_key_value_heads": 8,
+  "pretraining_tp": 1,
+  "rms_norm_eps": 1e-05,
+  "rope_scaling": null,
+  "rope_theta": 500000.0,
+  "tie_word_embeddings": false,
+  "transformers_version": "4.57.1",
+  "use_cache": true,
+  "vocab_size": 128256
+}
+
+training example:
+input_ids:
+[36227, 2380, 10631, 369, 19994, 9498, 13, 16, 13, 45614, 264, 24770, 323, 78216, 10173, 25, 7557, 2771, 701, 21644, 527, 29408, 315, 264, 8205, 315, 26390, 323, 24822, 11, 16025, 13128, 11, 4459, 41936, 11, 323, 9498, 50127, 13, 1115, 8779, 311, 3493, 701, 2547, 449, 279, 7718, 37493, 311, 734, 520, 1202, 1888, 323, 649, 1520, 5471, 21249, 19338, 382, 17, 13, 3365, 425, 304, 5912, 7106, 5820, 25, 33918, 374, 16996, 369, 20958, 3831, 25896, 11, 24569, 11, 323, 41713, 2890, 13, 71715, 369, 520, 3325, 220, 3965, 4520, 315, 24070, 91490, 10368, 477, 220, 2075, 4520, 315, 71920, 10368, 1855, 2046, 382, 18, 13, 2175, 3403, 6212, 25, 25531, 3403, 4367, 6212, 374, 16996, 369, 7106, 323, 10723, 1664, 33851, 13, 1102, 8779, 311, 37377, 20247, 11, 7417, 25702, 734, 11, 323, 11815, 9498, 6650, 323, 22852, 734, 13, 71715, 369, 220, 22, 12, 24, 4207, 315, 6212, 1855, 3814, 13]
+inputs:
+Give three tips for staying healthy.1. Eat a balanced and nutritious diet: Make sure your meals are inclusive of a variety of fruits and vegetables, lean protein, whole grains, and healthy fats. This helps to provide your body with the essential nutrients to function at its best and can help prevent chronic diseases.
+
+2. Engage in regular physical activity: Exercise is crucial for maintaining strong bones, muscles, and cardiovascular health. Aim for at least 150 minutes of moderate aerobic exercise or 75 minutes of vigorous exercise each week.
+
+3. Get enough sleep: Getting enough quality sleep is crucial for physical and mental well-being. It helps to regulate mood, improve cognitive function, and supports healthy growth and immune function. Aim for 7-9 hours of sleep each night.
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, 16, 13, 45614, 264, 24770, 323, 78216, 10173, 25, 7557, 2771, 701, 21644, 527, 29408, 315, 264, 8205, 315, 26390, 323, 24822, 11, 16025, 13128, 11, 4459, 41936, 11, 323, 9498, 50127, 13, 1115, 8779, 311, 3493, 701, 2547, 449, 279, 7718, 37493, 311, 734, 520, 1202, 1888, 323, 649, 1520, 5471, 21249, 19338, 382, 17, 13, 3365, 425, 304, 5912, 7106, 5820, 25, 33918, 374, 16996, 369, 20958, 3831, 25896, 11, 24569, 11, 323, 41713, 2890, 13, 71715, 369, 520, 3325, 220, 3965, 4520, 315, 24070, 91490, 10368, 477, 220, 2075, 4520, 315, 71920, 10368, 1855, 2046, 382, 18, 13, 2175, 3403, 6212, 25, 25531, 3403, 4367, 6212, 374, 16996, 369, 7106, 323, 10723, 1664, 33851, 13, 1102, 8779, 311, 37377, 20247, 11, 7417, 25702, 734, 11, 323, 11815, 9498, 6650, 323, 22852, 734, 13, 71715, 369, 220, 22, 12, 24, 4207, 315, 6212, 1855, 3814, 13]
+labels:
+1. Eat a balanced and nutritious diet: Make sure your meals are inclusive of a variety of fruits and vegetables, lean protein, whole grains, and healthy fats. This helps to provide your body with the essential nutrients to function at its best and can help prevent chronic diseases.
+
+2. Engage in regular physical activity: Exercise is crucial for maintaining strong bones, muscles, and cardiovascular health. Aim for at least 150 minutes of moderate aerobic exercise or 75 minutes of vigorous exercise each week.
+
+3. Get enough sleep: Getting enough quality sleep is crucial for physical and mental well-being. It helps to regulate mood, improve cognitive function, and supports healthy growth and immune function. Aim for 7-9 hours of sleep each night.
+[INFO|2025-12-04 03:03:26] llamafactory.model.model_utils.kv_cache:143 >> KV cache is disabled during training.
+[WARNING|logging.py:328] 2025-12-04 03:03:27,213 >> `torch_dtype` is deprecated! Use `dtype` instead!
+[INFO|modeling_utils.py:1169] 2025-12-04 03:03:27,214 >> loading weights file /home/chenzhican/LLaMA-Factory/Llama-3-8B-Base/LLM-Research/Meta-Llama-3-8B/model.safetensors.index.json
+[INFO|modeling_utils.py:2341] 2025-12-04 03:03:27,215 >> Instantiating LlamaForCausalLM model under default dtype torch.bfloat16.
+[INFO|configuration_utils.py:986] 2025-12-04 03:03:27,219 >> Generate config GenerationConfig {
+  "bos_token_id": 128000,
+  "eos_token_id": 128001,
+  "use_cache": false
+}
+
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.02s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:06,  3.02s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:09<00:03,  3.01s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:09<00:00,  2.10s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:09<00:00,  2.43s/it]
+[INFO|configuration_utils.py:939] 2025-12-04 03:03:37,069 >> loading configuration file /home/chenzhican/LLaMA-Factory/Llama-3-8B-Base/LLM-Research/Meta-Llama-3-8B/generation_config.json
+[INFO|configuration_utils.py:986] 2025-12-04 03:03:37,071 >> Generate config GenerationConfig {
+  "bos_token_id": 128000,
+  "do_sample": true,
+  "eos_token_id": 128001,
+  "max_length": 4096,
+  "temperature": 0.6,
+  "top_p": 0.9
+}
+
+[INFO|dynamic_module_utils.py:423] 2025-12-04 03:03:37,072 >> Could not locate the custom_generate/generate.py inside /home/chenzhican/LLaMA-Factory/Llama-3-8B-Base/LLM-Research/Meta-Llama-3-8B.
+[INFO|2025-12-04 03:03:37] llamafactory.model.model_utils.checkpointing:143 >> Gradient checkpointing enabled.
+[INFO|2025-12-04 03:03:37] llamafactory.model.model_utils.attention:143 >> Using torch SDPA for faster training and inference.
+[INFO|2025-12-04 03:03:37] llamafactory.model.adapter:143 >> Upcasting trainable params to float32.
+[INFO|2025-12-04 03:03:37] llamafactory.model.adapter:143 >> 🚀 Starting Layer-Selective Fine-Tuning...
+[INFO|2025-12-04 03:03:37] llamafactory.model.adapter:143 >>    > Target Layers: [16]
+[INFO|2025-12-04 03:03:37] llamafactory.model.adapter:143 >>    > Target Module: MLP
+[INFO|2025-12-04 03:03:37] llamafactory.model.adapter:143 >> ✅ Successfully unfrozen 3 parameters.
+[INFO|2025-12-04 03:03:37] llamafactory.model.adapter:143 >>    > First trainable param: model.layers.16.mlp.gate_proj.weight
+[INFO|2025-12-04 03:03:37] llamafactory.model.adapter:143 >>    > Last trainable param:  model.layers.16.mlp.down_proj.weight
+[INFO|2025-12-04 03:03:37] llamafactory.model.adapter:143 >> Fine-tuning method: FFN-only
+[INFO|2025-12-04 03:03:37] llamafactory.model.loader:143 >> trainable params: 176,160,768 || all params: 8,030,261,248 || trainable%: 2.1937
+[WARNING|trainer.py:906] 2025-12-04 03:03:37,158 >> The model is already on multiple devices. Skipping the move to device specified in `args`.
+[INFO|trainer.py:749] 2025-12-04 03:03:37,163 >> Using auto half precision backend
+[WARNING|trainer.py:982] 2025-12-04 03:03:37,166 >> The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'pad_token_id': 128001}.
+[INFO|trainer.py:2519] 2025-12-04 03:03:37,757 >> ***** Running training *****
+[INFO|trainer.py:2520] 2025-12-04 03:03:37,757 >>   Num examples = 10,000
+[INFO|trainer.py:2521] 2025-12-04 03:03:37,757 >>   Num Epochs = 3
+[INFO|trainer.py:2522] 2025-12-04 03:03:37,757 >>   Instantaneous batch size per device = 4
+[INFO|trainer.py:2525] 2025-12-04 03:03:37,757 >>   Total train batch size (w. parallel, distributed & accumulation) = 32
+[INFO|trainer.py:2526] 2025-12-04 03:03:37,758 >>   Gradient Accumulation steps = 8
+[INFO|trainer.py:2527] 2025-12-04 03:03:37,758 >>   Total optimization steps = 939
+[INFO|trainer.py:2528] 2025-12-04 03:03:37,760 >>   Number of trainable parameters = 176,160,768
+[INFO|integration_utils.py:867] 2025-12-04 03:03:37,762 >> Automatic Weights & Biases logging enabled, to disable set os.environ["WANDB_DISABLED"] = "true"
+wandb: Currently logged in as: 13844199805 (13844199805-bupt-edu-cn) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run 0pvu6t6x
+wandb: Tracking run with wandb version 0.23.1
+wandb: Run data is saved locally in /home/chenzhican/LLaMA-Factory/wandb/run-20251204_030338-0pvu6t6x
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run worldly-flower-27
+wandb: ⭐️ View project at https://wandb.ai/13844199805-bupt-edu-cn/llamafactory
+wandb: 🚀 View run at https://wandb.ai/13844199805-bupt-edu-cn/llamafactory/runs/0pvu6t6x
+  0%|          | 0/939 [00:00<?, ?it/s]Traceback (most recent call last):
+  File "/home/chenzhican/miniconda3/envs/v1/bin/llamafactory-cli", line 7, in <module>
+    sys.exit(main())
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/cli.py", line 24, in main
+    launcher.launch()
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/launcher.py", line 152, in launch
+    run_exp()
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/train/tuner.py", line 110, in run_exp
+    _training_function(config={"args": args, "callbacks": callbacks})
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/train/tuner.py", line 72, in _training_function
+    run_sft(model_args, data_args, training_args, finetuning_args, generating_args, callbacks)
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/train/sft/workflow.py", line 96, in run_sft
+    train_result = trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
+    return inner_training_loop(
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/trainer.py", line 2674, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/trainer.py", line 4020, in training_step
+    loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/train/sft/trainer.py", line 117, in compute_loss
+    return super().compute_loss(model, inputs, *args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/trainer.py", line 4110, in compute_loss
+    outputs = model(**inputs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/accelerate/utils/operations.py", line 819, in forward
+    return model_forward(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/accelerate/utils/operations.py", line 807, in __call__
+    return convert_to_fp32(self.model_forward(*args, **kwargs))
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/amp/autocast_mode.py", line 44, in decorate_autocast
+    return func(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 459, in forward
+    outputs: BaseModelOutputWithPast = self.model(
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/utils/generic.py", line 1064, in wrapper
+    outputs = func(self, *args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 395, in forward
+    hidden_states = decoder_layer(
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/modeling_layers.py", line 93, in __call__
+    return self._gradient_checkpointing_func(partial(super().__call__, **kwargs), *args)
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/model/model_utils/checkpointing.py", line 97, in custom_gradient_checkpointing_func
+    return gradient_checkpointing_func(func, *args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/_compile.py", line 53, in inner
+    return disable_fn(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py", line 1044, in _fn
+    return fn(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/utils/checkpoint.py", line 496, in checkpoint
+    return CheckpointFunction.apply(function, preserve, *args)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/autograd/function.py", line 581, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/utils/checkpoint.py", line 262, in forward
+    outputs = run_function(*args)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
+    return func(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 309, in forward
+    hidden_states = self.mlp(hidden_states)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 155, in forward
+    down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 112.00 MiB. GPU 0 has a total capacity of 15.72 GiB of which 7.69 MiB is free. Including non-PyTorch memory, this process has 15.70 GiB memory in use. Of the allocated memory 15.44 GiB is allocated by PyTorch, and 67.62 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Traceback (most recent call last):
+  File "/home/chenzhican/miniconda3/envs/v1/bin/llamafactory-cli", line 7, in <module>
+    sys.exit(main())
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/cli.py", line 24, in main
+    launcher.launch()
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/launcher.py", line 152, in launch
+    run_exp()
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/train/tuner.py", line 110, in run_exp
+    _training_function(config={"args": args, "callbacks": callbacks})
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/train/tuner.py", line 72, in _training_function
+    run_sft(model_args, data_args, training_args, finetuning_args, generating_args, callbacks)
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/train/sft/workflow.py", line 96, in run_sft
+    train_result = trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
+    return inner_training_loop(
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/trainer.py", line 2674, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/trainer.py", line 4020, in training_step
+    loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/train/sft/trainer.py", line 117, in compute_loss
+    return super().compute_loss(model, inputs, *args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/trainer.py", line 4110, in compute_loss
+    outputs = model(**inputs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/accelerate/utils/operations.py", line 819, in forward
+    return model_forward(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/accelerate/utils/operations.py", line 807, in __call__
+    return convert_to_fp32(self.model_forward(*args, **kwargs))
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/amp/autocast_mode.py", line 44, in decorate_autocast
+    return func(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 459, in forward
+    outputs: BaseModelOutputWithPast = self.model(
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/utils/generic.py", line 1064, in wrapper
+    outputs = func(self, *args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 395, in forward
+    hidden_states = decoder_layer(
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/modeling_layers.py", line 93, in __call__
+    return self._gradient_checkpointing_func(partial(super().__call__, **kwargs), *args)
+  File "/home/chenzhican/LLaMA-Factory/src/llamafactory/model/model_utils/checkpointing.py", line 97, in custom_gradient_checkpointing_func
+    return gradient_checkpointing_func(func, *args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/_compile.py", line 53, in inner
+    return disable_fn(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py", line 1044, in _fn
+    return fn(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/utils/checkpoint.py", line 496, in checkpoint
+    return CheckpointFunction.apply(function, preserve, *args)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/autograd/function.py", line 581, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/utils/checkpoint.py", line 262, in forward
+    outputs = run_function(*args)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
+    return func(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 309, in forward
+    hidden_states = self.mlp(hidden_states)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 155, in forward
+    down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/chenzhican/miniconda3/envs/v1/lib/python3.10/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 112.00 MiB. GPU 0 has a total capacity of 15.72 GiB of which 7.69 MiB is free. Including non-PyTorch memory, this process has 15.70 GiB memory in use. Of the allocated memory 15.44 GiB is allocated by PyTorch, and 67.62 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mworldly-flower-27[0m at: [34m[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/run-20251204_030338-0pvu6t6x/logs[0m
+usage: accelerate <command> [<args>] launch [-h] [--config_file CONFIG_FILE]
+                                            [--quiet] [--cpu] [--multi_gpu]
+                                            [--tpu]
+                                            [--mixed_precision {no,fp16,bf16,fp8}]
+                                            [--num_processes NUM_PROCESSES]
+                                            [--num_machines NUM_MACHINES]
+                                            [--num_cpu_threads_per_process NUM_CPU_THREADS_PER_PROCESS]
+                                            [--enable_cpu_affinity]
+                                            [--dynamo_backend {no,eager,aot_eager,inductor,aot_ts_nvfuser,nvprims_nvfuser,cudagraphs,ofi,fx2trt,onnxrt,tensorrt,aot_torchxla_trace_once,torhchxla_trace_once,ipex,tvm}]
+                                            [--dynamo_mode {default,reduce-overhead,max-autotune}]
+                                            [--dynamo_use_fullgraph]
+                                            [--dynamo_use_dynamic]
+                                            [--dynamo_use_regional_compilation]
+                                            [--use_deepspeed] [--use_fsdp]
+                                            [--use_parallelism_config]
+                                            [--use_megatron_lm] [--use_xpu]
+                                            [--gpu_ids GPU_IDS]
+                                            [--same_network]
+                                            [--machine_rank MACHINE_RANK]
+                                            [--main_process_ip MAIN_PROCESS_IP]
+                                            [--main_process_port MAIN_PROCESS_PORT]
+                                            [-t TEE] [--log_dir LOG_DIR]
+                                            [--role ROLE]
+                                            [--rdzv_backend RDZV_BACKEND]
+                                            [--rdzv_conf RDZV_CONF]
+                                            [--max_restarts MAX_RESTARTS]
+                                            [--monitor_interval MONITOR_INTERVAL]
+                                            [-m] [--no_python] [--tpu_cluster]
+                                            [--no_tpu_cluster]
+                                            [--tpu_use_sudo] [--vm VM]
+                                            [--env ENV]
+                                            [--main_training_function MAIN_TRAINING_FUNCTION]
+                                            [--downcast_bf16]
+                                            [--deepspeed_config_file DEEPSPEED_CONFIG_FILE]
+                                            [--zero_stage ZERO_STAGE]
+                                            [--offload_optimizer_device OFFLOAD_OPTIMIZER_DEVICE]
+                                            [--offload_param_device OFFLOAD_PARAM_DEVICE]
+                                            [--offload_optimizer_nvme_path OFFLOAD_OPTIMIZER_NVME_PATH]
+                                            [--offload_param_nvme_path OFFLOAD_PARAM_NVME_PATH]
+                                            [--gradient_accumulation_steps GRADIENT_ACCUMULATION_STEPS]
+                                            [--gradient_clipping GRADIENT_CLIPPING]
+                                            [--zero3_init_flag ZERO3_INIT_FLAG]
+                                            [--zero3_save_16bit_model ZERO3_SAVE_16BIT_MODEL]
+                                            [--deepspeed_hostfile DEEPSPEED_HOSTFILE]
+                                            [--deepspeed_exclusion_filter DEEPSPEED_EXCLUSION_FILTER]
+                                            [--deepspeed_inclusion_filter DEEPSPEED_INCLUSION_FILTER]
+                                            [--deepspeed_multinode_launcher DEEPSPEED_MULTINODE_LAUNCHER]
+                                            [--deepspeed_moe_layer_cls_names DEEPSPEED_MOE_LAYER_CLS_NAMES]
+                                            [--fsdp_version {1,2}]
+                                            [--fsdp_offload_params FSDP_OFFLOAD_PARAMS]
+                                            [--fsdp_min_num_params FSDP_MIN_NUM_PARAMS]
+                                            [--fsdp_sharding_strategy FSDP_SHARDING_STRATEGY]
+                                            [--fsdp_reshard_after_forward FSDP_RESHARD_AFTER_FORWARD]
+                                            [--fsdp_auto_wrap_policy FSDP_AUTO_WRAP_POLICY]
+                                            [--fsdp_transformer_layer_cls_to_wrap FSDP_TRANSFORMER_LAYER_CLS_TO_WRAP]
+                                            [--fsdp_backward_prefetch FSDP_BACKWARD_PREFETCH]
+                                            [--fsdp_state_dict_type FSDP_STATE_DICT_TYPE]
+                                            [--fsdp_forward_prefetch FSDP_FORWARD_PREFETCH]
+                                            [--fsdp_use_orig_params FSDP_USE_ORIG_PARAMS]
+                                            [--fsdp_cpu_ram_efficient_loading FSDP_CPU_RAM_EFFICIENT_LOADING]
+                                            [--fsdp_sync_module_states FSDP_SYNC_MODULE_STATES]
+                                            [--fsdp_activation_checkpointing FSDP_ACTIVATION_CHECKPOINTING]
+                                            [--megatron_lm_tp_degree MEGATRON_LM_TP_DEGREE]
+                                            [--megatron_lm_pp_degree MEGATRON_LM_PP_DEGREE]
+                                            [--megatron_lm_num_micro_batches MEGATRON_LM_NUM_MICRO_BATCHES]
+                                            [--megatron_lm_sequence_parallelism MEGATRON_LM_SEQUENCE_PARALLELISM]
+                                            [--megatron_lm_recompute_activations MEGATRON_LM_RECOMPUTE_ACTIVATIONS]
+                                            [--megatron_lm_use_distributed_optimizer MEGATRON_LM_USE_DISTRIBUTED_OPTIMIZER]
+                                            [--megatron_lm_gradient_clipping MEGATRON_LM_GRADIENT_CLIPPING]
+                                            [--fp8_backend {te,msamp}]
+                                            [--fp8_use_autocast_during_eval]
+                                            [--fp8_margin FP8_MARGIN]
+                                            [--fp8_interval FP8_INTERVAL]
+                                            [--fp8_format {HYBRID,E4M3,E5M2}]
+                                            [--fp8_amax_history_len FP8_AMAX_HISTORY_LEN]
+                                            [--fp8_amax_compute_algo {max,most_recent}]
+                                            [--fp8_override_linear_precision FP8_OVERRIDE_LINEAR_PRECISION]
+                                            [--fp8_opt_level {O1,O2}]
+                                            [--aws_access_key_id AWS_ACCESS_KEY_ID]
+                                            [--aws_secret_access_key AWS_SECRET_ACCESS_KEY]
+                                            [--debug]
+                                            [--mpirun_hostfile MPIRUN_HOSTFILE]
+                                            [--mpirun_ccl MPIRUN_CCL]
+                                            [--parallelism_config_dp_replicate_size PARALLELISM_CONFIG_DP_REPLICATE_SIZE]
+                                            [--parallelism_config_dp_shard_size PARALLELISM_CONFIG_DP_SHARD_SIZE]
+                                            [--parallelism_config_tp_size PARALLELISM_CONFIG_TP_SIZE]
+                                            [--parallelism_config_cp_size PARALLELISM_CONFIG_CP_SIZE]
+                                            [--parallelism_config_cp_comm_strategy PARALLELISM_CONFIG_CP_COMM_STRATEGY]
+                                            training_script ...
+accelerate <command> [<args>] launch: error: the following arguments are required: training_script, training_script_args
+usage: accelerate <command> [<args>] launch [-h] [--config_file CONFIG_FILE]
+                                            [--quiet] [--cpu] [--multi_gpu]
+                                            [--tpu]
+                                            [--mixed_precision {no,fp16,bf16,fp8}]
+                                            [--num_processes NUM_PROCESSES]
+                                            [--num_machines NUM_MACHINES]
+                                            [--num_cpu_threads_per_process NUM_CPU_THREADS_PER_PROCESS]
+                                            [--enable_cpu_affinity]
+                                            [--dynamo_backend {no,eager,aot_eager,inductor,aot_ts_nvfuser,nvprims_nvfuser,cudagraphs,ofi,fx2trt,onnxrt,tensorrt,aot_torchxla_trace_once,torhchxla_trace_once,ipex,tvm}]
+                                            [--dynamo_mode {default,reduce-overhead,max-autotune}]
+                                            [--dynamo_use_fullgraph]
+                                            [--dynamo_use_dynamic]
+                                            [--dynamo_use_regional_compilation]
+                                            [--use_deepspeed] [--use_fsdp]
+                                            [--use_parallelism_config]
+                                            [--use_megatron_lm] [--use_xpu]
+                                            [--gpu_ids GPU_IDS]
+                                            [--same_network]
+                                            [--machine_rank MACHINE_RANK]
+                                            [--main_process_ip MAIN_PROCESS_IP]
+                                            [--main_process_port MAIN_PROCESS_PORT]
+                                            [-t TEE] [--log_dir LOG_DIR]
+                                            [--role ROLE]
+                                            [--rdzv_backend RDZV_BACKEND]
+                                            [--rdzv_conf RDZV_CONF]
+                                            [--max_restarts MAX_RESTARTS]
+                                            [--monitor_interval MONITOR_INTERVAL]
+                                            [-m] [--no_python] [--tpu_cluster]
+                                            [--no_tpu_cluster]
+                                            [--tpu_use_sudo] [--vm VM]
+                                            [--env ENV]
+                                            [--main_training_function MAIN_TRAINING_FUNCTION]
+                                            [--downcast_bf16]
+                                            [--deepspeed_config_file DEEPSPEED_CONFIG_FILE]
+                                            [--zero_stage ZERO_STAGE]
+                                            [--offload_optimizer_device OFFLOAD_OPTIMIZER_DEVICE]
+                                            [--offload_param_device OFFLOAD_PARAM_DEVICE]
+                                            [--offload_optimizer_nvme_path OFFLOAD_OPTIMIZER_NVME_PATH]
+                                            [--offload_param_nvme_path OFFLOAD_PARAM_NVME_PATH]
+                                            [--gradient_accumulation_steps GRADIENT_ACCUMULATION_STEPS]
+                                            [--gradient_clipping GRADIENT_CLIPPING]
+                                            [--zero3_init_flag ZERO3_INIT_FLAG]
+                                            [--zero3_save_16bit_model ZERO3_SAVE_16BIT_MODEL]
+                                            [--deepspeed_hostfile DEEPSPEED_HOSTFILE]
+                                            [--deepspeed_exclusion_filter DEEPSPEED_EXCLUSION_FILTER]
+                                            [--deepspeed_inclusion_filter DEEPSPEED_INCLUSION_FILTER]
+                                            [--deepspeed_multinode_launcher DEEPSPEED_MULTINODE_LAUNCHER]
+                                            [--deepspeed_moe_layer_cls_names DEEPSPEED_MOE_LAYER_CLS_NAMES]
+                                            [--fsdp_version {1,2}]
+                                            [--fsdp_offload_params FSDP_OFFLOAD_PARAMS]
+                                            [--fsdp_min_num_params FSDP_MIN_NUM_PARAMS]
+                                            [--fsdp_sharding_strategy FSDP_SHARDING_STRATEGY]
+                                            [--fsdp_reshard_after_forward FSDP_RESHARD_AFTER_FORWARD]
+                                            [--fsdp_auto_wrap_policy FSDP_AUTO_WRAP_POLICY]
+                                            [--fsdp_transformer_layer_cls_to_wrap FSDP_TRANSFORMER_LAYER_CLS_TO_WRAP]
+                                            [--fsdp_backward_prefetch FSDP_BACKWARD_PREFETCH]
+                                            [--fsdp_state_dict_type FSDP_STATE_DICT_TYPE]
+                                            [--fsdp_forward_prefetch FSDP_FORWARD_PREFETCH]
+                                            [--fsdp_use_orig_params FSDP_USE_ORIG_PARAMS]
+                                            [--fsdp_cpu_ram_efficient_loading FSDP_CPU_RAM_EFFICIENT_LOADING]
+                                            [--fsdp_sync_module_states FSDP_SYNC_MODULE_STATES]
+                                            [--fsdp_activation_checkpointing FSDP_ACTIVATION_CHECKPOINTING]
+                                            [--megatron_lm_tp_degree MEGATRON_LM_TP_DEGREE]
+                                            [--megatron_lm_pp_degree MEGATRON_LM_PP_DEGREE]
+                                            [--megatron_lm_num_micro_batches MEGATRON_LM_NUM_MICRO_BATCHES]
+                                            [--megatron_lm_sequence_parallelism MEGATRON_LM_SEQUENCE_PARALLELISM]
+                                            [--megatron_lm_recompute_activations MEGATRON_LM_RECOMPUTE_ACTIVATIONS]
+                                            [--megatron_lm_use_distributed_optimizer MEGATRON_LM_USE_DISTRIBUTED_OPTIMIZER]
+                                            [--megatron_lm_gradient_clipping MEGATRON_LM_GRADIENT_CLIPPING]
+                                            [--fp8_backend {te,msamp}]
+                                            [--fp8_use_autocast_during_eval]
+                                            [--fp8_margin FP8_MARGIN]
+                                            [--fp8_interval FP8_INTERVAL]
+                                            [--fp8_format {HYBRID,E4M3,E5M2}]
+                                            [--fp8_amax_history_len FP8_AMAX_HISTORY_LEN]
+                                            [--fp8_amax_compute_algo {max,most_recent}]
+                                            [--fp8_override_linear_precision FP8_OVERRIDE_LINEAR_PRECISION]
+                                            [--fp8_opt_level {O1,O2}]
+                                            [--aws_access_key_id AWS_ACCESS_KEY_ID]
+                                            [--aws_secret_access_key AWS_SECRET_ACCESS_KEY]
+                                            [--debug]
+                                            [--mpirun_hostfile MPIRUN_HOSTFILE]
+                                            [--mpirun_ccl MPIRUN_CCL]
+                                            [--parallelism_config_dp_replicate_size PARALLELISM_CONFIG_DP_REPLICATE_SIZE]
+                                            [--parallelism_config_dp_shard_size PARALLELISM_CONFIG_DP_SHARD_SIZE]
+                                            [--parallelism_config_tp_size PARALLELISM_CONFIG_TP_SIZE]
+                                            [--parallelism_config_cp_size PARALLELISM_CONFIG_CP_SIZE]
+                                            [--parallelism_config_cp_comm_strategy PARALLELISM_CONFIG_CP_COMM_STRATEGY]
+                                            training_script ...
+accelerate <command> [<args>] launch: error: the following arguments are required: training_script, training_script_args

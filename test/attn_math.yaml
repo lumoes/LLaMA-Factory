@@ -1,21 +1,14 @@
-### model
-model_name_or_path: /home/chenzhican/LLaMA-Factory/Llama-3-8B-Base/LLM-Research/Meta-Llama-3-8B
-trust_remote_code: true
-
-
-
 ### method
+model_name_or_path: "/home/chenzhican/.cache/Llama-3-8B-Base/LLM-Research/Meta-Llama-3-8B"
+trust_remote_code: true
 stage: sft
 finetuning_type: ffn_only  # 再次确认你的代码逻辑对应这个名字
 do_train: true
-
 ### dataset
 dataset: math
 cutoff_len: 4096
 max_samples: 10000
 overwrite_cache: true
-preprocessing_num_workers: 16
-dataloader_num_workers: 4
 
 ### output
 output_dir: saves/ours/math
@@ -27,18 +20,18 @@ save_only_model: false
 report_to: none 
 
 ### train
-per_device_train_batch_size: 8    # 显存 48G 足够
-gradient_accumulation_steps: 8    # ✅ 改动：让总 BS = 64，梯度更稳
-learning_rate: 2e-5               # ✅ 改动：全参数微调特定层，安全起见降低 LR
+per_device_train_batch_size: 1  # 显存 16G 足够
+gradient_accumulation_steps: 2   
+learning_rate: 1e-5               # ✅ 改动：全参数微调特定层，安全起见降低 LR
 num_train_epochs: 3.0
 lr_scheduler_type: cosine
 warmup_ratio: 0.1
 bf16: true
 ddp_timeout: 180000000
 resume_from_checkpoint: null
-
+preprocessing_num_workers: 16
+dataloader_num_workers: 4
 ## eval
-
 val_size: 0.1
 per_device_eval_batch_size: 8
 eval_strategy: steps
@@ -47,3 +40,4 @@ load_best_model_at_end: true    # 训练结束后，自动加载效果最好的�
 metric_for_best_model: eval_loss # 根据验证集的 Loss 来评判
 greater_is_better: false        # Loss 是越小越好
 save_total_limit: 1             # 始终只保留那个“最好的”# ✅ 改动：配合 save_steps，频频看效果
+

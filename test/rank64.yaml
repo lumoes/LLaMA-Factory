@@ -1,13 +1,13 @@
 ### model
-model_name_or_path: /root/autodl-tmp/models/LLM-Research/Meta-Llama-3-8B
+model_name_or_path: /home/chenzhican/LLaMA-Factory/Llama-3-8B-Base/LLM-Research/Meta-Llama-3-8B
 trust_remote_code: true
 
 ### method
 stage: sft
 finetuning_type: lora
 do_train: true
-lora_rank: 64                # 22 * 3 ≈ 66，和 r=64 的 LoRA 基本持平
-lora_alpha: 128                 # alpha = 2 * rank
+lora_rank: 256               # 22 * 3 ≈ 66，和 r=64 的 LoRA 基本持平
+lora_alpha: 512                 # alpha = 2 * rank
 lora_target: "layers.4.mlp.gate_proj,layers.4.mlp.up_proj,layers.4.mlp.down_proj,layers.6.mlp.gate_proj,layers.6.mlp.up_proj,layers.6.mlp.down_proj,layers.8.mlp.gate_proj,layers.8.mlp.up_proj,layers.8.mlp.down_proj，"
 
 ### dataset
@@ -19,8 +19,8 @@ preprocessing_num_workers: 16
 dataloader_num_workers: 4
 
 ### train
-per_device_train_batch_size: 4   
-gradient_accumulation_steps: 8  
+per_device_train_batch_size: 1 
+gradient_accumulation_steps: 2 
 learning_rate: 1e-4
 num_train_epochs: 3
 lr_scheduler_type: cosine
@@ -30,7 +30,7 @@ ddp_timeout: 180000000
 resume_from_checkpoint: null
 
 ### output
-output_dir: /root/autodl-tmp/saves/math/ffn
+output_dir: saves/math/loclora
 logging_steps: 10
 save_steps: 1000
 plot_loss: true

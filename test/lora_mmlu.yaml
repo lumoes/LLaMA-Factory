@@ -1,0 +1,39 @@
+### model
+model_name_or_path: /home/chenzhican/LLaMA-Factory/Llama-3-8B-Base/LLM-Research/Meta-Llama-3-8B
+trust_remote_code: true
+
+### method
+stage: sft
+finetuning_type: lora
+lora_rank: 32         # 22 * 3 ≈ 66，和 r=64 的 LoRA 基本持平
+lora_alpha: 64
+
+do_train: true
+
+### dataset
+dataset: alpaca_gpt4_en
+cutoff_len: 1024
+max_samples: 10000
+overwrite_cache: true
+preprocessing_num_workers: 8
+dataloader_num_workers: 4
+
+### output
+output_dir: saves/lora_mmlu
+logging_steps: 10
+save_steps: 1000
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: wandb  # choices: [none, wandb, tensorboard, swanlab, mlflow]
+
+### train
+per_device_train_batch_size: 4   # ✅ 2. 显存够的话改成 2，不够就保持 1
+gradient_accumulation_steps: 8    # 保持梯度累积，稳定更新
+learning_rate: 1.0e-5           # ✅ 3. 稍微调低一点，为了配合长 Epoch
+num_train_epochs: 3
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000
+resume_from_checkpoint: null

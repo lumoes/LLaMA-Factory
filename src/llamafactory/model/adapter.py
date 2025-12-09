@@ -42,69 +42,108 @@ def _setup_ffn_tuning(
     """只微调指定层的 FFN 结构"""
     if not is_trainable:
         return
+    
+    # ================= 配置区域 (Configuration) =================
+    # 1. 目标层 (可以是一个或多个，例如 [16] 或 [4, 6, 8])
+    target_layers = [9,10,11] 
+    
+    # 2. 目标模块类型 (关键开关！)
+    # - "mlp"       : 对应 LocFFN (Gate, Up, Down Proj) -> 用于 MMLU 知识任务
+    # - "self_attn" : 对应 LocAttn (Q, K, V, O Proj)    -> 用于 GSM8K 推理任务
+    target_module_type = ["self_attn","mlp"]
+    # ==========================================================
 
+    logger.info_rank0(f"🚀 Starting Layer-Selective Fine-Tuning...")
+    logger.info_rank0(f"   > Target Layers: {target_layers}")
+    logger.info_rank0(f"   > Target Module: {target_module_type}")
+
+    # 0. 安全检查：层号是否越界
+    num_layers = getattr(model.config, "num_hidden_layers", 32)
+    for layer_idx in target_layers:
+        if layer_idx >= num_layers:
+            raise ValueError(f"Target layer {layer_idx} exceeds model total layers {num_layers}")
+
+    # 1. 冻结所有参数 (初始化)
+    for param in model.parameters():
+        param.requires_grad = False
+
+    # 2. 智能解冻指定参数
+    trainable_params = []
+    
+    for name, param in model.named_parameters():
+        # name 结构通常为: model.layers.16.mlp.gate_proj.weight
+        
+        # 步骤 A: 检查是否属于 'layers' 结构
+        parts = name.split(".")
+        if "layers" not in parts:
+            continue
+            
+        try:
+            # 获取当前参数的层号 (找到 'layers' 后面紧跟的数字)
+            layer_idx_pos = parts.index("layers") + 1
+            current_layer_idx = int(parts[layer_idx_pos])
+            
+            # 步骤 B: 核心判定逻辑
+            # 1. 层号在目标列表中
+            # 2. 参数名包含目标模块关键字 (mlp 或 self_attn)
+            if (current_layer_idx in target_layers) and any(m in name for m in target_module_type):
+                param.requires_grad = True
+                trainable_params.append(name)
+                
+                # (可选) 如果需要 FP32 精度训练，取消下面注释
+                if cast_trainable_params_to_fp32:
+                    param.data = param.data.to(torch.float32)
+                    
+        except (ValueError, IndexError):
+            continue
+
+    # 3. 结果校验
+    if len(trainable_params) == 0:
+        raise ValueError(
+            f"❌ No parameters found! Check if '{target_module_type}' exists in model structure."
+        )
+
+    logger.info_rank0(f"✅ Successfully unfrozen {len(trainable_params)} parameters.")
+    logger.info_rank0(f"   > First trainable param: {trainable_params[0]}")
+    logger.info_rank0(f"   > Last trainable param:  {trainable_params[-1]}")
     logger.info_rank0("Fine-tuning method: FFN-only")
     
-    # # 获取目标层号
-    # #target_layer = 16
-    # target_layer = getattr(finetuning_args, "ffn_target_layer", None)
-    # if target_layer is None:
-    #     raise ValueError("Must specify ffn_target_layer for FFN-only tuning")
-        
-    # num_layers = getattr(model.config, "num_hidden_layers", None)
-    # if target_layer >= num_layers:
-    #     target_layer = num_layers % 2 + 1
-    #     raise ValueError(f"Target layer {target_layer} exceeds model layers {num_layers}")
     
-    # # 冻结所有参数
+    # 1. 硬编码目标层
+    # target_layers = [4, 6, 8] 
+    
+    # # 2. 获取模型总层数并校验
+    # num_layers = getattr(model.config, "num_hidden_layers", None)
+    # if num_layers is not None:
+    #     for layer_idx in target_layers:
+    #         if layer_idx >= num_layers:
+    #             raise ValueError(f"Target layer {layer_idx} exceeds model layers {num_layers}")
+    
+    # # 3. 先冻结所有参数 (这是基础)
     # for param in model.parameters():
     #     param.requires_grad = False
     
-    # # 只解冻目标层的 FFN 参数
-    # ffn_keywords = [
-    #     f"model.layers.{target_layer}.mlp.gate_proj",
-    #     f"model.layers.{target_layer}.mlp.down_proj", 
-    #     f"model.layers.{target_layer}.mlp.up_proj"
-    # ]
-    target_layers = [4, 6, 8] 
+    # # 4. 核心修改：只解冻目标层的 FFN (MLP) 参数
+    # # Llama 结构的 FFN 通常包含 'mlp' 关键字 (gate_proj, up_proj, down_proj)
+    # trainable_params = []
     
-    # 获取模型总层数
-    num_layers = getattr(model.config, "num_hidden_layers", None)
+    # print(f"正在解冻以下层的 FFN 参数: {target_layers}")
     
-    # 2. 校验层号是否越界
-    if num_layers is not None:
-        for layer_idx in target_layers:
-            if layer_idx >= num_layers:
-                raise ValueError(f"Target layer {layer_idx} exceeds model layers {num_layers}")
-    
-    # 3. 先冻结所有参数 (这是基础)
-    for param in model.parameters():
-        param.requires_grad = False
-    
-    # 4. 核心修改：解冻这几层的所有参数
-    # 我们遍历所有参数名，如果名字里包含 "layers.4." 或 "layers.6." 等，就解冻
-    
-    print(f"正在解冻以下层的所有参数: {target_layers}")
-    
-    for name, param in model.named_parameters():
-        for layer_idx in target_layers:
-            # 关键匹配逻辑：匹配 "layers.{层号}." 
-            # 注意末尾的 "." 很重要，防止匹配到 layers.14 当你只想找 layers.1 时
-            if f"layers.{layer_idx}." in name:
-                param.requires_grad = True
-    
-    trainable_params = []
-    for name, param in model.named_parameters():
-        if any(keyword in name for keyword in ffn_keywords):
-            param.requires_grad = True
-            if cast_trainable_params_to_fp32:
-                param.data = param.data.to(torch.float32)
-            trainable_params.append(name)
-            
-    if len(trainable_params) == 0:
-        raise ValueError(f"No FFN parameters found in layer {target_layer}")
+    # for name, param in model.named_parameters():
+    #     # 检查参数是否属于目标层，并且属于 mlp 模块
+    #     is_target_layer = any(f"layers.{i}." in name for i in target_layers)
+    #     is_ffn = "mlp" in name  # 关键：确保只选中 FFN 部分，不选中 Attention
         
-    logger.info_rank0(f"Trainable FFN parameters in layer {target_layer}: {trainable_params}")
+    #     if is_target_layer and is_ffn:
+    #         param.requires_grad = True
+            
+    #         # 如果需要强转 FP32 (通常用于 QLoRA 后续处理，纯全量微调不需要但保留无妨)
+    #         if cast_trainable_params_to_fp32:
+    #             param.data = param.data.to(torch.float32)
+                
+    #         trainable_params.append(name)
+
+
 
 def _setup_full_tuning(
     model: "PreTrainedModel",

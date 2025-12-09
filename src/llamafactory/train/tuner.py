@@ -16,6 +16,7 @@ import os
 import shutil
 from typing import TYPE_CHECKING, Any, Optional
 
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 import torch
 import torch.distributed as dist
 from transformers import EarlyStoppingCallback, PreTrainedModel
